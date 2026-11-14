@@ -17,7 +17,7 @@ document.getElementById('replay').addEventListener('click', () => bouquet.replay
 const PHOTOS = [
   { src: 'assets/photos/tidepools.jpg',   caption: 'tidepools',          alt: 'Waves breaking beyond mossy tidepool rocks',      motion: 'ripple', band: [0.28, 0.58] },
   { src: 'assets/photos/golden-gate.jpg', caption: 'golden gate, night', alt: 'The Golden Gate Bridge lit up at night',          motion: 'twinkle' },
-  { src: 'assets/photos/beach-dog.jpg',   caption: 'beach day',          alt: 'A curly black dog lying in the sand by the waves', motion: 'ripple', band: [0, 0.18], lift: 0.3, aspect: '4 / 5', zoom: 1.3, focusY: 0.6 },
+  { src: 'assets/photos/fog-palms.jpg',   caption: 'palms in the fog',   alt: 'A palm tree silhouetted against glowing night fog, with string lights below', motion: 'twinkle', aspect: '4 / 3', zoom: 1.15, focusY: 0.4 },
 ];
 
 const gallery = document.getElementById('gallery');
@@ -34,6 +34,47 @@ PHOTOS.forEach((p, i) => {
   gallery.append(fig);
   AsciiBloom(canvas, { src: p.src, look: 'photo', motion: p.motion, band: p.band, lift: p.lift, zoom: p.zoom, focusX: p.focusX, focusY: p.focusY, mode: 'lens', ragged: true, revealOnView: true });
 });
+
+// ---- podcast guests --------------------------------------------------------------------------
+// Every guest, newest first, pulled from the YouTube descriptions and the old Squarespace archive.
+// key: true = shown under "featured guests". Everyone appears in the "all guests" list.
+// yt = the YouTube video id (the part after watch?v=).
+const GUESTS = [
+  { ep: 29, name: 'Dr. Michael Littman',     role: 'Associate Provost for AI, Brown University', yt: 'IORuQstCVlQ', key: true },
+  { ep: 28, name: 'Pranay',                  role: 'co-founder, Tova',                           yt: 'py7SsLXnbJs' },
+  { ep: 27, name: 'Thorin Klosowski',        role: 'security & privacy activist, EFF',           yt: 'yin0f75rRv8' },
+  { ep: 26, name: 'Jonathan Thomas-Palmer',  role: 'Mr. P of Flipping Physics',                  yt: '7xQFu5tx3vU' },
+  { ep: 25, name: 'Sarah Phillips',          role: 'CEO, Girls Into VC',                         yt: 'qV-0V2UUR48', key: true },
+  { ep: 24, name: 'Grace Yacobe',            role: 'founder, Mezzo Biotech',                     yt: 'bJviJvoH1mU', key: true },
+  { ep: 23, name: 'Sune Selsbæk-Reitz',      role: 'tech philosopher',                           yt: 'HKK4ZvlCmxI', key: true },
+  { ep: 22, name: 'Reed Nocera & Rex Zhang', role: 'author of Internal Leadership; creator',     yt: '2RSRXW4RAsY' },
+  { ep: 21, name: 'Aaryan Parikh',           role: 'co-founder, Stellar Learning',               yt: '_NdhSBE5epA' },
+  { ep: 20, name: 'Jill',                    role: 'founder, Mocktail',                          yt: 'iIqUqxmASNs' },
+  { ep: 19, name: 'Karen Zeigler',           role: 'CEO, The Human Score',                       yt: 'WfTyKqpKcNQ' },
+  { ep: 18, name: 'Jagan',                   role: 'founder, EduVerse',                          yt: 'wxYWEhuyq3w' },
+  { ep: 17, name: 'Srinidhi Karthik',        role: '2025 ISEF finalist',                         yt: 'MumaJ6Czb9M' },
+  { ep: 16, name: 'Dr. Don Heider',          role: 'chief executive, Markkula Center for Applied Ethics', yt: 'I_VqpPPDef8' },
+  { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU' },
+  { ep: 14, name: 'Vinaya',                  role: 'tech ethics activist',                       yt: 'SVMYETu-jVE' },
+  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ', key: true },
+  { ep: 12, name: 'Somya Gupta',             role: 'founder, Context',                           yt: 'XEhBRh4P-wo' },
+  { ep: 11, name: 'Dr. Osonde Osoba',        role: 'responsible AI researcher',                  yt: '4trtxbNjLSo', key: true },
+  { ep: 10, name: 'Dr. Ashley Dalrymple',    role: 'neuroscientist, brain-computer interfaces',  yt: 'pDwBoCRQhQw', key: true },
+  { ep: null, name: 'Pavan Kumar',           role: 'founder, PocketCounselor',                   yt: 'Pjl4phPzsyY' },
+  { ep: 8,  name: 'Dr. Ibrahim Karabayir',   role: 'AI for heart disease',                       yt: 'BI_KmEi3IWY' },
+  { ep: 7,  name: 'Dr. Alex Hanna',          role: 'AI researcher',                              yt: 'R0gdC6zyOYw' },
+  { ep: 6,  name: 'Dr. Sahar Joakim',        role: 'algorithmic bias',                           yt: 'Xyj-UsOiF10' },
+  { ep: 5,  name: 'Jordan Wrigley',          role: 'privacy of period-tracking apps',            yt: '4VgWAcX-cqc' },
+  { ep: 4,  name: 'Dr. Brian Patrick Green', role: 'ethics of space exploration',                yt: 'bdw8VhCPi4M' },
+  { ep: 2,  name: 'Divya Tadimeti',          role: 'deepfakes & voice recognition (2 parts)',    yt: '8Sc_hFcClvc' },
+  { ep: 1,  name: 'Dr. Ann Cavoukian',       role: 'creator of Privacy by Design',               yt: 'WxL8nsbZCYY' },
+];
+const guestLink = (g) => `<a href="https://www.youtube.com/watch?v=${g.yt}">${g.name}</a>`;
+document.getElementById('guests-key').innerHTML = GUESTS.filter((g) => g.key)
+  .map((g) => `<li>${guestLink(g)} <span>${g.role}</span></li>`).join('');
+document.getElementById('guests-all').innerHTML = GUESTS
+  .map((g) => `<li><span class="ep">${g.ep ? 'EP.' + String(g.ep).padStart(3, '0') : 'EP.---'}</span>${guestLink(g)} <span class="muted">· ${g.role}</span></li>`).join('');
+document.getElementById('guest-count').textContent = GUESTS.length;
 
 // ---- ~/stalk-me icons: a quick hand-typed scramble on hover ------------------------------------
 const GLYPHS = '#%&*+=<>/\\|~:;.';

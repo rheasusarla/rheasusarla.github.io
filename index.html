@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
   <header class="top">
@@ -72,23 +72,19 @@
       </p>
 
       <h4 class="sub">recent episodes</h4>
-      <!-- EDIT: point each link at the episode on YouTube or Spotify. -->
-      <ol class="episodes">
-        <li><span class="ep">EP.029</span><a href="https://www.youtube.com/@rhea.susarla">Brown's AI chief says we're getting this all wrong</a></li>
-        <li><span class="ep">EP.023</span><a href="https://www.youtube.com/@rhea.susarla">Do ethical tech companies even exist? (Sune Selsbæk-Reitz)</a></li>
-        <li><span class="ep">EP.011</span><a href="https://www.youtube.com/@rhea.susarla">What is responsible AI? (Dr. Osoba)</a></li>
+            <ol class="episodes">
+        <li><span class="ep">EP.029</span><a href="https://www.youtube.com/watch?v=IORuQstCVlQ">Brown's AI chief says we're getting this all wrong</a></li>
+        <li><span class="ep">EP.023</span><a href="https://www.youtube.com/watch?v=HKK4ZvlCmxI">Do ethical tech companies even exist? (Sune Selsbæk-Reitz)</a></li>
+        <li><span class="ep">EP.011</span><a href="https://www.youtube.com/watch?v=4trtxbNjLSo">What is responsible AI? (Dr. Osoba)</a></li>
       </ol>
 
+      <!-- Guests are listed in main.js (GUESTS). Set key: true on the ones to feature here. -->
       <h4 class="sub">featured guests</h4>
-      <ul class="guests">
-        <li>Dr. Michael Littman <span>Associate Provost for AI, Brown University</span></li>
-        <li>Dr. Osonde Osoba <span>Responsible AI expert</span></li>
-        <li>Dr. Ashley Dalrymple <span>Brain implant researcher</span></li>
-        <li>Sune Selsbæk-Reitz <span>Tech ethicist</span></li>
-        <li>Sarah Phillips <span>CEO, Girls Into VC</span></li>
-        <li>Grace Yacobe <span>Biotech founder</span></li>
-        <li>Jia Chen <span>CEO, Jam</span></li>
-      </ul>
+      <ul class="guests" id="guests-key"></ul>
+      <details class="all-guests">
+        <summary>all guests (<span id="guest-count"></span>)</summary>
+        <ol class="guest-list" id="guests-all"></ol>
+      </details>
     </section>
 
     <!-- PHOTOGRAPHY: each <figure> is one photo redrawn in ASCII. Add more in main.js (PHOTOS list). -->
@@ -108,7 +104,7 @@
     <p>made by hand, grown from a photo · <span id="year"></span></p>
   </footer>
 
-  <script src="ascii-bloom.js?v=10"></script>
-  <script src="main.js?v=10"></script>
+  <script src="ascii-bloom.js?v=12"></script>
+  <script src="main.js?v=12"></script>
 </body>
 </html>
