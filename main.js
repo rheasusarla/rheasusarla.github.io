@@ -18,13 +18,12 @@ const PHOTOS = [
   { src: 'assets/photos/tidepools.jpg',   caption: 'tidepools',          alt: 'Waves breaking beyond mossy tidepool rocks',      motion: 'ripple', band: [0.28, 0.58] },
   { src: 'assets/photos/golden-gate.jpg', caption: 'golden gate, night', alt: 'The Golden Gate Bridge lit up at night',          motion: 'twinkle' },
   { src: 'assets/photos/fog-palms.jpg',   caption: 'palms in the fog',   alt: 'A palm tree silhouetted against glowing night fog, with string lights below', motion: 'twinkle', aspect: '4 / 3', zoom: 1.15, focusY: 0.4 },
-  { src: 'assets/photos/dog-grass.jpg',   caption: 'park day',           alt: 'A happy curly black-and-white dog sitting on green grass, looking up', motion: 'still', lift: 0.06, aspect: '4 / 5', zoom: 1.25, focusX: 0.48, focusY: 0.5 },
 ];
 
 const gallery = document.getElementById('gallery');
 PHOTOS.forEach((p, i) => {
   const fig = document.createElement('figure');
-  fig.className = `shot shot-${i % 4}`;
+  fig.className = `shot shot-${i % 3}`;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-label', `${p.alt}, drawn in colored ASCII characters. Photo by Rhea Susarla.`);
@@ -55,9 +54,9 @@ const GUESTS = [
   { ep: 18, name: 'Jagan',                   role: 'founder, EduVerse',                          yt: 'wxYWEhuyq3w' },
   { ep: 17, name: 'Srinidhi Karthik',        role: '2025 ISEF finalist',                         yt: 'MumaJ6Czb9M' },
   { ep: 16, name: 'Dr. Don Heider',          role: 'chief executive, Markkula Center for Applied Ethics', yt: 'I_VqpPPDef8' },
-  { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU', key: true },
+  { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU' },
   { ep: 14, name: 'Vinaya',                  role: 'tech ethics activist',                       yt: 'SVMYETu-jVE' },
-  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ' },
+  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ', key: true },
   { ep: 12, name: 'Somya Gupta',             role: 'founder, Context',                           yt: 'XEhBRh4P-wo' },
   { ep: 11, name: 'Dr. Osonde Osoba',        role: 'responsible AI researcher',                  yt: '4trtxbNjLSo' },
   { ep: 10, name: 'Dr. Ashley Dalrymple',    role: 'neuroscientist, brain-computer interfaces',  yt: 'pDwBoCRQhQw', key: true },
