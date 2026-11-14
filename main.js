@@ -94,4 +94,72 @@ document.querySelectorAll('.icon pre').forEach((pre) => {
   });
 });
 
+// ---- pixel dust: hover a button with data-dust="color,color,..." -------------------------------
+// A ring of square pixels ripples out from the button's edge, then a little dust drifts up and fades.
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const PX = 3;                       // pixel size; everything snaps to this grid
+  const cv = document.createElement('canvas');
+  cv.className = 'dust';
+  document.body.append(cv);
+  const ctx = cv.getContext('2d');
+  let parts = [], running = false;
+  const size = () => { const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener('resize', size);
+
+  function burst(el) {
+    const r = el.getBoundingClientRect(), colors = el.dataset.dust.split(',');
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const pick = () => colors[(Math.random() * colors.length) | 0];
+    // ripple: pixels start on the button's outline and all travel outward at the same pace
+    const n = Math.round((r.width + r.height) / 5);
+    for (let i = 0; i < n; i++) {
+      const t = i / n * 2 * (r.width + r.height);
+      let x, y;
+      if (t < r.width) { x = r.left + t; y = r.top; }
+      else if (t < r.width + r.height) { x = r.right; y = r.top + t - r.width; }
+      else if (t < 2 * r.width + r.height) { x = r.right - (t - r.width - r.height); y = r.bottom; }
+      else { x = r.left; y = r.bottom - (t - 2 * r.width - r.height); }
+      const a = Math.atan2((y - cy) / r.height, (x - cx) / r.width);
+      parts.push({ x, y, vx: Math.cos(a) * 85, vy: Math.sin(a) * 85, g: 0, life: 0.55, age: 0, c: pick(), ring: true });
+      // a fainter second ring a beat later, every other pixel
+      if (i % 2 === 0) parts.push({ x, y, vx: Math.cos(a) * 60, vy: Math.sin(a) * 60, g: 0, life: 0.5, age: -0.14, c: pick(), ring: true });
+    }
+    // dust: a looser scatter that floats up, sparkles and falls away
+    for (let i = 0; i < 26; i++) {
+      const a = Math.random() * Math.PI * 2, sp = 30 + Math.random() * 90;
+      parts.push({ x: cx + (Math.random() - 0.5) * r.width, y: cy + (Math.random() - 0.5) * r.height,
+        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.6 - 60, g: 140, life: 0.6 + Math.random() * 0.6, age: -Math.random() * 0.12, c: pick() });
+    }
+    if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); }
+  }
+
+  let last = 0;
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter((p) => (p.age += dt) < p.life);
+    for (const p of parts) {
+      if (p.age < 0) continue;
+      p.vy += p.g * dt; p.vx *= 0.97; p.x += p.vx * dt; p.y += p.vy * dt;
+      const k = 1 - p.age / p.life;
+      // flicker on/off a little, like old pixel sparkles
+      if (!p.ring && Math.random() < 0.18) continue;
+      ctx.globalAlpha = p.ring ? k * 0.9 : k;
+      ctx.fillStyle = p.c;
+      const s = p.ring ? PX - 1 : (k > 0.6 ? PX : PX - 1);
+      ctx.fillRect(Math.round(p.x / PX) * PX, Math.round(p.y / PX) * PX, s, s);
+    }
+    ctx.globalAlpha = 1;
+    if (parts.length) requestAnimationFrame(tick); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+
+  document.querySelectorAll('[data-dust]').forEach((el) => {
+    let cool = 0;
+    const go = () => { const t = performance.now(); if (t - cool < 400) return; cool = t; burst(el); };
+    el.addEventListener('pointerenter', go);
+    el.addEventListener('focus', go);
+  });
+})();
+
 document.getElementById('year').textContent = new Date().getFullYear();

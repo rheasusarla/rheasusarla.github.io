@@ -58,6 +58,7 @@ h2::before { content: "~/"; color: var(--muted); }
 .buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 .button { display: inline-block; padding: 6px 12px; border: 1px solid var(--ink); border-radius: 4px; text-decoration: none; }
 .button:hover { border-color: var(--accent); }
+.dust { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10; }
 
 .episodes { list-style: none; padding: 0; margin: 0; }
 .episodes li { display: flex; gap: 14px; padding: 8px 0; border-bottom: 1px dashed var(--rule); }
