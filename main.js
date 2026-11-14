@@ -36,7 +36,7 @@ PHOTOS.forEach((p, i) => {
 });
 
 // ---- podcast guests --------------------------------------------------------------------------
-// Every guest, newest first, pulled from the YouTube descriptions and the old Squarespace archive.
+// Every episode and its guest, newest first, pulled from the YouTube descriptions and the old Squarespace archive.
 // key: true = shown under "featured guests". Everyone appears in the "all guests" list.
 // yt = the YouTube video id (the part after watch?v=).
 const GUESTS = [
@@ -56,7 +56,7 @@ const GUESTS = [
   { ep: 16, name: 'Dr. Don Heider',          role: 'chief executive, Markkula Center for Applied Ethics', yt: 'I_VqpPPDef8' },
   { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU' },
   { ep: 14, name: 'Vinaya',                  role: 'tech ethics activist',                       yt: 'SVMYETu-jVE' },
-  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ', key: true },
+  { ep: 13, name: 'Jia Chen',                role: '2x founder, Jam',                            yt: 'Mk3PQ9POfYQ', key: true },
   { ep: 12, name: 'Somya Gupta',             role: 'founder, Context',                           yt: 'XEhBRh4P-wo' },
   { ep: 11, name: 'Dr. Osonde Osoba',        role: 'responsible AI researcher',                  yt: '4trtxbNjLSo' },
   { ep: 10, name: 'Dr. Ashley Dalrymple',    role: 'neuroscientist, brain-computer interfaces',  yt: 'pDwBoCRQhQw', key: true },
@@ -66,7 +66,8 @@ const GUESTS = [
   { ep: 6,  name: 'Dr. Sahar Joakim',        role: 'algorithmic bias',                           yt: 'Xyj-UsOiF10' },
   { ep: 5,  name: 'Jordan Wrigley',          role: 'privacy of period-tracking apps',            yt: '4VgWAcX-cqc' },
   { ep: 4,  name: 'Dr. Brian Patrick Green', role: 'ethics of space exploration',                yt: 'bdw8VhCPi4M' },
-  { ep: 2,  name: 'Divya Tadimeti',          role: 'deepfakes & voice recognition (2 parts)',    yt: '8Sc_hFcClvc' },
+  { ep: 3,  name: 'Divya Tadimeti',          role: 'ethics of voice recognition (part 2)',       yt: 'yF8x2DDjvfE' },
+  { ep: 2,  name: 'Divya Tadimeti',          role: 'ethics of deepfakes (part 1)',               yt: '8Sc_hFcClvc' },
   { ep: 1,  name: 'Dr. Ann Cavoukian',       role: 'creator of Privacy by Design',               yt: 'WxL8nsbZCYY', key: true },
 ];
 const guestLink = (g) => `<a href="https://www.youtube.com/watch?v=${g.yt}">${g.name}</a>`;
