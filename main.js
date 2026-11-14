@@ -18,12 +18,13 @@ const PHOTOS = [
   { src: 'assets/photos/tidepools.jpg',   caption: 'tidepools',          alt: 'Waves breaking beyond mossy tidepool rocks',      motion: 'ripple', band: [0.28, 0.58] },
   { src: 'assets/photos/golden-gate.jpg', caption: 'golden gate, night', alt: 'The Golden Gate Bridge lit up at night',          motion: 'twinkle' },
   { src: 'assets/photos/fog-palms.jpg',   caption: 'palms in the fog',   alt: 'A palm tree silhouetted against glowing night fog, with string lights below', motion: 'twinkle', aspect: '4 / 3', zoom: 1.15, focusY: 0.4 },
+  { src: 'assets/photos/dog-grass.jpg',   caption: 'park day',           alt: 'A happy curly black-and-white dog sitting on green grass, looking up', motion: 'still', lift: 0.06, aspect: '4 / 5', zoom: 1.25, focusX: 0.48, focusY: 0.5 },
 ];
 
 const gallery = document.getElementById('gallery');
 PHOTOS.forEach((p, i) => {
   const fig = document.createElement('figure');
-  fig.className = `shot shot-${i % 3}`;
+  fig.className = `shot shot-${i % 4}`;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-label', `${p.alt}, drawn in colored ASCII characters. Photo by Rhea Susarla.`);
@@ -42,11 +43,11 @@ PHOTOS.forEach((p, i) => {
 const GUESTS = [
   { ep: 29, name: 'Dr. Michael Littman',     role: 'Associate Provost for AI, Brown University', yt: 'IORuQstCVlQ', key: true },
   { ep: 28, name: 'Pranay',                  role: 'co-founder, Tova',                           yt: 'py7SsLXnbJs' },
-  { ep: 27, name: 'Thorin Klosowski',        role: 'security & privacy activist, EFF',           yt: 'yin0f75rRv8' },
-  { ep: 26, name: 'Jonathan Thomas-Palmer',  role: 'Mr. P of Flipping Physics',                  yt: '7xQFu5tx3vU' },
+  { ep: 27, name: 'Thorin Klosowski',        role: 'security & privacy activist, EFF',           yt: 'yin0f75rRv8', key: true },
+  { ep: 26, name: 'Jonathan Thomas-Palmer',  role: 'Mr. P of Flipping Physics',                  yt: '7xQFu5tx3vU', key: true },
   { ep: 25, name: 'Sarah Phillips',          role: 'CEO, Girls Into VC',                         yt: 'qV-0V2UUR48', key: true },
-  { ep: 24, name: 'Grace Yacobe',            role: 'founder, Mezzo Biotech',                     yt: 'bJviJvoH1mU', key: true },
-  { ep: 23, name: 'Sune Selsbæk-Reitz',      role: 'tech philosopher',                           yt: 'HKK4ZvlCmxI', key: true },
+  { ep: 24, name: 'Grace Yacobe',            role: 'founder, Mezzo Biotech',                     yt: 'bJviJvoH1mU' },
+  { ep: 23, name: 'Sune Selsbæk-Reitz',      role: 'tech philosopher',                           yt: 'HKK4ZvlCmxI' },
   { ep: 22, name: 'Reed Nocera & Rex Zhang', role: 'author of Internal Leadership; creator',     yt: '2RSRXW4RAsY' },
   { ep: 21, name: 'Aaryan Parikh',           role: 'co-founder, Stellar Learning',               yt: '_NdhSBE5epA' },
   { ep: 20, name: 'Jill',                    role: 'founder, Mocktail',                          yt: 'iIqUqxmASNs' },
@@ -54,20 +55,20 @@ const GUESTS = [
   { ep: 18, name: 'Jagan',                   role: 'founder, EduVerse',                          yt: 'wxYWEhuyq3w' },
   { ep: 17, name: 'Srinidhi Karthik',        role: '2025 ISEF finalist',                         yt: 'MumaJ6Czb9M' },
   { ep: 16, name: 'Dr. Don Heider',          role: 'chief executive, Markkula Center for Applied Ethics', yt: 'I_VqpPPDef8' },
-  { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU' },
+  { ep: 15, name: 'Rish Gupta',              role: 'founder, Spot AI',                           yt: 'XQBnP8gcIpU', key: true },
   { ep: 14, name: 'Vinaya',                  role: 'tech ethics activist',                       yt: 'SVMYETu-jVE' },
-  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ', key: true },
+  { ep: 13, name: 'Jia Chen',                role: '2x founder, Sorcerer',                       yt: 'Mk3PQ9POfYQ' },
   { ep: 12, name: 'Somya Gupta',             role: 'founder, Context',                           yt: 'XEhBRh4P-wo' },
-  { ep: 11, name: 'Dr. Osonde Osoba',        role: 'responsible AI researcher',                  yt: '4trtxbNjLSo', key: true },
+  { ep: 11, name: 'Dr. Osonde Osoba',        role: 'responsible AI researcher',                  yt: '4trtxbNjLSo' },
   { ep: 10, name: 'Dr. Ashley Dalrymple',    role: 'neuroscientist, brain-computer interfaces',  yt: 'pDwBoCRQhQw', key: true },
-  { ep: null, name: 'Pavan Kumar',           role: 'founder, PocketCounselor',                   yt: 'Pjl4phPzsyY' },
+  { ep: 9,  name: 'Pavan Kumar',             role: 'founder, PocketCounselor',                   yt: 'Pjl4phPzsyY' },
   { ep: 8,  name: 'Dr. Ibrahim Karabayir',   role: 'AI for heart disease',                       yt: 'BI_KmEi3IWY' },
-  { ep: 7,  name: 'Dr. Alex Hanna',          role: 'AI researcher',                              yt: 'R0gdC6zyOYw' },
+  { ep: 7,  name: 'Dr. Alex Hanna',          role: 'AI researcher',                              yt: 'R0gdC6zyOYw', key: true },
   { ep: 6,  name: 'Dr. Sahar Joakim',        role: 'algorithmic bias',                           yt: 'Xyj-UsOiF10' },
   { ep: 5,  name: 'Jordan Wrigley',          role: 'privacy of period-tracking apps',            yt: '4VgWAcX-cqc' },
   { ep: 4,  name: 'Dr. Brian Patrick Green', role: 'ethics of space exploration',                yt: 'bdw8VhCPi4M' },
   { ep: 2,  name: 'Divya Tadimeti',          role: 'deepfakes & voice recognition (2 parts)',    yt: '8Sc_hFcClvc' },
-  { ep: 1,  name: 'Dr. Ann Cavoukian',       role: 'creator of Privacy by Design',               yt: 'WxL8nsbZCYY' },
+  { ep: 1,  name: 'Dr. Ann Cavoukian',       role: 'creator of Privacy by Design',               yt: 'WxL8nsbZCYY', key: true },
 ];
 const guestLink = (g) => `<a href="https://www.youtube.com/watch?v=${g.yt}">${g.name}</a>`;
 document.getElementById('guests-key').innerHTML = GUESTS.filter((g) => g.key)
