@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rhea Susarla</title>
+  <meta name="description" content="Rhea Susarla: host of Rheality Check, a podcast about tech, ethics, and society.">
+  <meta name="theme-color" content="#050605">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=8">
+</head>
+<body>
+  <header class="top">
+    <a class="me" href="#">rhea</a>
+    <nav>
+      <a href="#podcast">podcast</a>
+      <a href="#photos">photos</a>
+      <a href="#school">school</a>
+    </nav>
+  </header>
+
+  <!-- The bouquet: your photo (assets/flowers.webp) drawn as living ASCII. See ascii-bloom.js. -->
+  <canvas class="bouquet" id="bouquet" role="img" aria-label="Pink trumpet-vine flowers drawn in colored ASCII characters, from a photo by Rhea Susarla"></canvas>
+
+  <main>
+    <div class="intro">
+      <h1>rhea susarla<span class="cursor" aria-hidden="true">_</span></h1>
+      <p class="lede">I host <a href="#podcast">Rheality Check</a>, a podcast about tech, ethics, and society. I also love creating art.</p>
+      <p class="hint">hover (or press and hold) the flowers to see the real photo · <button type="button" id="replay">replay bloom</button></p>
+    </div>
+
+    <!-- STALK ME: ASCII icon links. Each icon is a <pre>; edit the art freely, keep the lines the same width. -->
+    <section id="stalk-me">
+      <h2>stalk-me</h2>
+      <div class="icons">
+        <a class="icon yt" href="https://www.youtube.com/@rhea.susarla" aria-label="YouTube">
+<pre aria-hidden="true"> _________
+|   |\    |
+|   | \   |
+|   | /   |
+|___|/____|</pre><span>youtube</span></a>
+        <a class="icon sp" href="https://open.spotify.com/show/0ipyn8vxttEvNBiuklrWkt" aria-label="Spotify">
+<pre aria-hidden="true">  .-~~~-.
+ / _____ \
+|  ~~~~~  |
+ \  ~~~  /
+  '-...-'</pre><span>spotify</span></a>
+        <a class="icon ig" href="https://www.instagram.com/rhealitycheckpod/" aria-label="Instagram">
+<pre aria-hidden="true"> .-------.
+ |     o |
+ |  (@)  |
+ |       |
+ '-------'</pre><span>instagram</span></a>
+        <a class="icon li" href="https://www.linkedin.com/in/rhea-susarla/" aria-label="LinkedIn">
+<pre aria-hidden="true"> .-------.
+ | o     |
+ | | |\  |
+ | | | | |
+ '-------'</pre><span>linkedin</span></a>
+      </div>
+    </section>
+
+    <!-- PODCAST -->
+    <section id="podcast">
+      <h2>podcast</h2>
+      <h3 class="title">The Rheality Check Podcast</h3>
+      <p class="muted">tech ethics · society · entrepreneurship. Very genuine, very rheal conversations.</p>
+      <ul class="stats">
+        <li><b>38K+</b> youtube views</li>
+        <li><b>29+</b> episodes</li>
+        <li><b>200+</b> subscribers</li>
+      </ul>
+      <p class="buttons">
+        <a class="button" href="https://open.spotify.com/show/0ipyn8vxttEvNBiuklrWkt">listen on spotify</a>
+        <a class="button" href="https://www.youtube.com/@rhea.susarla">watch on youtube</a>
+      </p>
+
+      <h4 class="sub">recent episodes</h4>
+      <!-- EDIT: point each link at the episode on YouTube or Spotify. -->
+      <ol class="episodes">
+        <li><span class="ep">EP.029</span><a href="https://www.youtube.com/@rhea.susarla">Brown's AI chief says we're getting this all wrong</a></li>
+        <li><span class="ep">EP.023</span><a href="https://www.youtube.com/@rhea.susarla">Do ethical tech companies even exist? (Sune Selsbæk-Reitz)</a></li>
+        <li><span class="ep">EP.011</span><a href="https://www.youtube.com/@rhea.susarla">What is responsible AI? (Dr. Osoba)</a></li>
+      </ol>
+
+      <h4 class="sub">featured guests</h4>
+      <ul class="guests">
+        <li>Dr. Michael Littman <span>Associate Provost for AI, Brown University</span></li>
+        <li>Dr. Osonde Osoba <span>Responsible AI expert</span></li>
+        <li>Dr. Ashley Dalrymple <span>Brain implant researcher</span></li>
+        <li>Sune Selsbæk-Reitz <span>Tech ethicist</span></li>
+        <li>Sarah Phillips <span>CEO, Girls Into VC</span></li>
+        <li>Grace Yacobe <span>Biotech founder</span></li>
+        <li>Jia Chen <span>CEO, Jam</span></li>
+      </ul>
+    </section>
+
+    <!-- PHOTOGRAPHY: each <figure> is one photo redrawn in ASCII. Add more in main.js (PHOTOS list). -->
+    <section id="photos" class="wide">
+      <h2>photography</h2>
+      <p class="muted section-note">a few photos, redrawn in characters. hover (or press and hold) to see the original.</p>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <section id="school">
+      <h2>school</h2>
+      <p><strong>Lynbrook High School</strong>: Co-President of Women in STEM Club, President of French Honor Society, Test &amp; Drive Lead for FRC Team 846</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>made by hand, grown from a photo · <span id="year"></span></p>
+  </footer>
+
+  <script src="ascii-bloom.js?v=8"></script>
+  <script src="main.js?v=8"></script>
+</body>
+</html>
