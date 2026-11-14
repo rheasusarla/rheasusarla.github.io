@@ -56,24 +56,25 @@
     return { css: (k) => `hsl(${h | 0} ${(S * 100) | 0}% ${(Math.min(0.92, L * k) * 100) | 0}%)`, lum: L, dense: 0.45 + L * 0.7 };
   }
 
-  // 'photo': true colors with a little extra saturation; the darkest areas drop out to the page.
+  // 'photo': the photo's own colors. Each cell gets a soft wash of the pixel color behind its
+  // glyph, so the whole piece reads like the original picture, not just dots of color on black.
   // lift (0..0.3) raises the darkest tones so a dark subject (a black dog!) stays visible.
+  const PHOTO_WASH = 0.3;   // strength of the color wash behind the glyphs (0 = glyphs only)
+  const PHOTO_SAT = 1.15;   // a touch of extra saturation; 1 = exactly the photo
   function lookPhoto(r, g, b, lift) {
     if (lift) { const k = lift * 255; r += k * (1 - r / 255); g += k * (1 - g / 255); b += k * (1 - b / 255) + k * 0.15; }
     const lum = (0.3 * r + 0.59 * g + 0.11 * b) / 255;
-    if (lum < 0.11) return null;
-    // pale, colorless areas (overcast sky, sea haze) become a faint sparse texture,
-    // so the subject carries the picture instead of a wall of white glyphs
-    const chroma = (Math.max(r, g, b) - Math.min(r, g, b)) / 255;
-    if (lum > 0.55 && chroma < 0.16) {
-      const a = 0.28;
-      return { css: (k) => `rgba(${r},${g},${b},${Math.min(1, a * k)})`, lum: 0.2, dense: 0.12 + (lum - 0.55) * 0.5, haze: true };
-    }
-    const gray = lum * 255, boost = 1.45, dim = 0.88;
-    r = Math.max(0, Math.min(255, (gray + (r - gray) * boost) * dim));
-    g = Math.max(0, Math.min(255, (gray + (g - gray) * boost) * dim));
-    b = Math.max(0, Math.min(255, (gray + (b - gray) * boost) * dim));
-    return { css: (k) => `rgb(${Math.min(255, r * k) | 0},${Math.min(255, g * k) | 0},${Math.min(255, b * k) | 0})`, lum, dense: 0.2 + lum * 0.95 };
+    const gray = lum * 255;
+    r = Math.max(0, Math.min(255, gray + (r - gray) * PHOTO_SAT));
+    g = Math.max(0, Math.min(255, gray + (g - gray) * PHOTO_SAT));
+    b = Math.max(0, Math.min(255, gray + (b - gray) * PHOTO_SAT));
+    // glyphs are thin, so they're drawn a little brighter than the pixel to read at true value
+    const gl = 1.12;
+    return {
+      css: (k) => `rgb(${Math.min(255, r * gl * k) | 0},${Math.min(255, g * gl * k) | 0},${Math.min(255, b * gl * k) | 0})`,
+      wash: (a) => `rgba(${r | 0},${g | 0},${b | 0},${a})`,
+      lum, dense: 0.12 + lum * 0.95, photo: true,
+    };
   }
 
   window.AsciiBloom = function (canvas, opts) {
@@ -123,13 +124,14 @@
       st.edge = new Float32Array(cols * rows).fill(1);
       if (opts.ragged) {
         const seed = Math.floor(hash(cols, rows, opts.src.length) * 1000);
-        const margin = Math.min(cols, rows * (st.ch / st.cw)) * 0.3;
+        // a soft, slightly uneven feather: mostly the full picture, the border just frays a little
+        const margin = Math.min(cols, rows * (st.ch / st.cw)) * 0.1;
         for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
           const ex = Math.min(x, cols - 1 - x), ey = Math.min(y, rows - 1 - y) * (st.ch / st.cw);
           const d = Math.min(1, Math.min(ex, ey) / margin);
-          const n = noise(x / 7, y / 4, seed) * 0.65 + noise(x / 2.5, y / 1.5, seed + 1) * 0.35;
-          const v = d * 1.3 + (n - 0.5) * 1.5 - 0.4;
-          st.edge[y * cols + x] = v <= 0 ? 0 : Math.min(1, v * 2.2);
+          const n = noise(x / 6, y / 3, seed) * 0.7 + noise(x / 2, y / 1.2, seed + 1) * 0.3;
+          const v = d * 1.4 + (n - 0.5) * 0.7 - 0.15;
+          st.edge[y * cols + x] = v <= 0 ? 0 : Math.min(1, v * 1.6);
         }
       }
 
@@ -182,7 +184,11 @@
           const i = ((y * 2 + 1) * pw + sx) * 4;
           const p = look(px[i], px[i + 1], px[i + 2]);
           if (!p) continue;
-          if (p.haze && hash(x, y, 11) < 0.45) continue;   // leave gaps in the haze
+          if (p.photo) {   // color wash behind the glyph, fading out at the frayed edge
+            const fresh = Math.min(1, (age - reveal) / 0.4);
+            ctx.fillStyle = p.wash(PHOTO_WASH * edge * fresh);
+            ctx.fillRect(x * cw, y * ch, cw + 0.5, ch + 0.5);
+          }
           if (p.star) {
             if (hash(x, y, 3) > 0.997) { ctx.fillStyle = `rgba(255,250,235,${(0.3 + 0.5 * hash(x, y, Math.floor(t * 2))) * edge})`; ctx.fillText('.', x * cw, y * ch); }
             continue;
@@ -190,7 +196,7 @@
 
           const boil = Math.floor(st.frame / 5 + hash(x, y, 1) * 5);
           let gi = Math.floor(p.dense * (RAMP.length - 1) + (hash(x, y, boil) - 0.5) * 22);
-          gi = Math.max(p.haze ? 1 : 8, Math.min(RAMP.length - 1, gi));
+          gi = Math.max(p.photo ? 1 : 8, Math.min(RAMP.length - 1, gi));
           let glyph = RAMP[gi];
 
           // brightness multiplier: fades at ragged edges, flashes as a cell is typed, twinkles
