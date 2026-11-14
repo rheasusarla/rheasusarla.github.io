@@ -77,7 +77,6 @@ h2::before { content: "~/"; color: var(--muted); }
 .icon:hover span, .icon:focus-visible span { color: var(--ink); text-shadow: none; }
 .icon.yt { color: #ff5a4f; }
 .icon.sp { color: #1ed760; }
-.icon.ig { color: var(--accent); }
 .icon.li { color: #5aa9ff; }
 
 /* ---------- photography: breaks out of the text column, pieces drift off-grid ---------- */
