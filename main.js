@@ -16,8 +16,8 @@ document.getElementById('replay').addEventListener('click', () => bouquet.replay
 //   aspect: shape of the piece (default '3 / 2'); zoom / focusX / focusY crop in on the subject
 const PHOTOS = [
   { src: 'assets/photos/tidepools.jpg',   caption: 'tidepools',          alt: 'Waves breaking beyond mossy tidepool rocks',      motion: 'ripple', band: [0.28, 0.58] },
-  { src: 'assets/photos/golden-gate.jpg', caption: 'golden gate, night', alt: 'The Golden Gate Bridge lit up at night',          motion: 'twinkle' },
-  { src: 'assets/photos/fog-palms.jpg',   caption: 'palms in the fog',   alt: 'A palm tree silhouetted against glowing night fog, with string lights below', motion: 'twinkle', aspect: '4 / 3', zoom: 1.15, focusY: 0.4 },
+  { src: 'assets/photos/golden-gate.jpg', caption: 'shinygoldengate',    alt: 'The Golden Gate Bridge lit up at night',          motion: 'twinkle' },
+  { src: 'assets/photos/fog-palms.jpg',   caption: 'foggysanluisobispo', alt: 'A palm tree silhouetted against glowing night fog, with string lights below', motion: 'twinkle', aspect: '4 / 3', zoom: 1.15, focusY: 0.4 },
 ];
 
 const gallery = document.getElementById('gallery');
@@ -28,7 +28,7 @@ PHOTOS.forEach((p, i) => {
   canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-label', `${p.alt}, drawn in colored ASCII characters. Photo by Rhea Susarla.`);
   const cap = document.createElement('figcaption');
-  cap.innerHTML = `<span class="path">~/photos/</span>${p.caption}`;
+  cap.innerHTML = `<span class="path">~/photography/</span>${p.caption}`;
   if (p.aspect) canvas.style.aspectRatio = p.aspect;
   fig.append(canvas, cap);
   gallery.append(fig);
