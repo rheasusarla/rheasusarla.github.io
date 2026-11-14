@@ -162,4 +162,3 @@ document.querySelectorAll('.icon pre').forEach((pre) => {
   });
 })();
 
-document.getElementById('year').textContent = new Date().getFullYear();
